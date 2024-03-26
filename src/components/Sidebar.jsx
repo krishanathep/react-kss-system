@@ -22,14 +22,14 @@ export default function Sidebar() {
               role="menu"
               data-accordion="false"
             >
-              <li className="nav-header">MAIN MENU</li>
-              {/* <li className="nav-item">
+              <li className="nav-header">เมนูหลัก</li>
+              <li className="nav-item">
                 <Link to="/" className="nav-link">
-                  <i className="nav-icon fas fa-tachometer-alt"></i>
-                  <p>Dashboard</p>
+                  <i className="nav-icon fas fa-home"></i>
+                  <p>หน้าแรก</p>
                 </Link>
               </li>
-              <li className="nav-item">
+              {/* <li className="nav-item">
                 <Link to="/restaurant" className="nav-link">
                   <i className="nav-icon fas fa-utensils"></i>
                   <p>Restaurent</p>
@@ -37,7 +37,7 @@ export default function Sidebar() {
               </li>
               <li className="nav-item">
                 <Link to="/foods" className="nav-link">
-                <i className="nav-icon fas fa-hamburger"></i>
+                  <i className="nav-icon fas fa-hamburger"></i>
                   <p>Foods</p>
                 </Link>
               </li>
@@ -48,28 +48,28 @@ export default function Sidebar() {
                 </Link>
               </li> */}
               <li className="nav-item">
-                <Link to="/blogs" className="nav-link">
-                  <i className="nav-icon fas fa-comment-dots"></i>
-                  <p>Webboard</p>
+                <Link to="/documents" className="nav-link">
+                  <i className="nav-icon fas fa-file-pdf"></i>
+                  <p>เอกสาร</p>
                 </Link>
               </li>
               {/* <li className="nav-item">
-                <Link to="/chart" className="nav-link">
-                <i className="nav-icon fas fa-chart-pie"></i>
-                  <p>Chart-js</p>
-                </Link>
-              </li>
-              <li className="nav-item">
                 <Link to="/movies" className="nav-link">
-                <i className="nav-icon fas fa-photo-video"></i>
+                  <i className="nav-icon fas fa-photo-video"></i>
                   <p>Movies</p>
                 </Link>
-              </li> */}
-              {/* <li className="nav-header">TEST MENU</li>
+              </li>
+              <li className="nav-header">TEST MENU</li>
               <li className="nav-item">
                 <Link to="/test/table" className="nav-link">
                   <i className="nav-icon fas fa-vial"></i>
                   <p>Table</p>
+                </Link>
+              </li>
+               <li className="nav-item">
+                <Link to="/chart" className="nav-link">
+                  <i className="nav-icon fas fa-chart-pie"></i>
+                  <p>Chart</p>
                 </Link>
               </li> */}
             </ul>

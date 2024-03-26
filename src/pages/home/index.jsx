@@ -11,10 +11,10 @@ export default function Home() {
   const getAll = async () => {
     await axios
       .get(
-        "https://full-stack-app.com/laravel_restaurant_api/public/api/restaurants"
+        "https://full-stack-app.com/laravel_auth_jwt_api/public/api/documents"
       )
       .then((res) => {
-        setRestuarent(res.data.restaurants.length);
+        setRestuarent(res.data.documents.length);
       });
 
     await axios.get("https://full-stack-app.com/laravel_auth_jwt_api/public/api/events").then((res) => {
@@ -40,12 +40,12 @@ export default function Home() {
         <div className="container-fluid">
           <div className="row mb-2">
             <div className="col-sm-6">
-              <h1 className="m-0">Dashboard</h1>
+              <h1 className="m-0">หน้าแรก</h1>
             </div>
             <div className="col-sm-6">
               <ol className="breadcrumb float-sm-right">
                 <li className="breadcrumb-item">
-                  <li className="breadcrumb-item active">Dashboard</li>
+                  <li className="breadcrumb-item active">หน้าแรก</li>
                 </li>
               </ol>
             </div>
@@ -59,17 +59,17 @@ export default function Home() {
               <div className="small-box bg-info">
                 <div className="inner">
                   <h3>{restuarent}</h3>
-                  <p>All Restaurants</p>
+                  <p>เอกสารทั้งหมด</p>
                 </div>
                 <div className="icon">
-                  <i className="fas fa-utensils"></i>
+                  <i className="fas fa-file-pdf"></i>
                 </div>
-                <Link to={'/restaurant'} className="small-box-footer">
+                <Link to={'/documents'} className="small-box-footer">
                   More info <i className="fas fa-arrow-circle-right" />
                 </Link>
               </div>
             </div>
-            <div className="col-lg-3">
+            {/* <div className="col-lg-3">
               <div className="small-box bg-danger">
                 <div className="inner">
                   <h3>{bookings}</h3>
@@ -110,7 +110,7 @@ export default function Home() {
                   More info <i className="fas fa-arrow-circle-right" />
                 </Link>
               </div>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>

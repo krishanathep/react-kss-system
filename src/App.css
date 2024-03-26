@@ -5,6 +5,10 @@ code {
   font-family: "Prompt";
 }
 
+table, th, td {
+  font-family: "Prompt";
+}
+
 .dropdown-menu {
   min-width: 4rem;
 }
