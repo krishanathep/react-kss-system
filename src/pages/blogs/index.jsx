@@ -349,13 +349,13 @@ const blogs = () => {
                     {/* Create Blog Madal */}
                     <Modal centered show={createShow}>
                       <Modal.Header>
-                        <Modal.Title>Webboard create</Modal.Title>
+                        <Modal.Title>KSS Form Create</Modal.Title>
                       </Modal.Header>
                       <Modal.Body>
                         <Form>
                           <Row>
                             <Form.Group as={Col} md="12">
-                              <Form.Label>Title</Form.Label>
+                              <Form.Label>หัวข้อเรื่อง</Form.Label>
                               <Form.Control
                                 placeholder="Enter your title"
                                 {...register("title", { required: true })}

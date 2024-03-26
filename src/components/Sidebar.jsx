@@ -23,7 +23,7 @@ export default function Sidebar() {
               data-accordion="false"
             >
               <li className="nav-header">MAIN MENU</li>
-              <li className="nav-item">
+              {/* <li className="nav-item">
                 <Link to="/" className="nav-link">
                   <i className="nav-icon fas fa-tachometer-alt"></i>
                   <p>Dashboard</p>
@@ -46,14 +46,14 @@ export default function Sidebar() {
                   <i className="nav-icon fas fa-calendar"></i>
                   <p>Meetings</p>
                 </Link>
-              </li>
+              </li> */}
               <li className="nav-item">
                 <Link to="/blogs" className="nav-link">
                   <i className="nav-icon fas fa-comment-dots"></i>
                   <p>Webboard</p>
                 </Link>
               </li>
-              <li className="nav-item">
+              {/* <li className="nav-item">
                 <Link to="/chart" className="nav-link">
                 <i className="nav-icon fas fa-chart-pie"></i>
                   <p>Chart-js</p>
@@ -64,7 +64,7 @@ export default function Sidebar() {
                 <i className="nav-icon fas fa-photo-video"></i>
                   <p>Movies</p>
                 </Link>
-              </li>
+              </li> */}
               {/* <li className="nav-header">TEST MENU</li>
               <li className="nav-item">
                 <Link to="/test/table" className="nav-link">
