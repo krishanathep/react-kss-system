@@ -10,6 +10,8 @@ import Signup from "./pages/auth/Signup";
 
 import Home from './pages/Home'
 import Documents from './pages/Documents'
+import Suggesions from "./pages/suggestions";
+
 
 const RoutesPage = () => {
   return (
@@ -28,6 +30,7 @@ const RoutesPage = () => {
         >
           <Route path="/" element={<Home />} />
           <Route path="/documents" element={<Documents />} />
+          <Route path="/suggestions" element={<Suggesions />} />
         </Route>
       </Routes>
     </Router>
