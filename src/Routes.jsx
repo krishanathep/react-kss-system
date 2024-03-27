@@ -10,7 +10,7 @@ import Signup from "./pages/auth/Signup";
 
 import Home from './pages/home'
 import Documents from './pages/Documents'
-import Suggesions from "./pages/suggestions";
+import Suggesions from "./pages/Suggestions";
 
 
 const RoutesPage = () => {
