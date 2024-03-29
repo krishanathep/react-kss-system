@@ -55,6 +55,8 @@ const Approver = () => {
   const [status, setStatus] = useState("");
   const [cost, setcost] = useState("");
   const [date, setdate] = useState("");
+  const [work_result, setWorkResult] = useState("");
+  const [status_result, setStatusResult] = useState("");
 
   const getData = async () => {
     const from = (page - 1) * pageSize;
@@ -96,6 +98,8 @@ const Approver = () => {
         setStatus(res.data.ksssystem.status);
         setdate(res.data.ksssystem.date);
         setCreated(res.data.ksssystem.created_at);
+        setWorkResult(res.data.ksssystem.work_result);
+        setStatusResult(res.data.ksssystem.status_result);
       });
   };
 
@@ -222,7 +226,7 @@ const Approver = () => {
                           textAlignment: "center",
                           render: ({ status }) => {
                             return (
-                              <h5><Badge bg="primary">{status}</Badge></h5>
+                              <h5><Badge bg="success">{status}</Badge></h5>
                             )
                           },
                         },
@@ -418,6 +422,14 @@ const Approver = () => {
                             <Badge bg="primary">{status}</Badge>
                           </>
                         </Form.Group>
+                        {status_result ? (
+                          <Form.Group>
+                            <Form.Label>เหตุผลอนุมัติ/ไม่อนุมัติ</Form.Label> :{" "}
+                            {status_result}
+                          </Form.Group>
+                        ) : (
+                          ""
+                        )}
                         <Form.Group>
                           <Form.Label>กำหนดเสร็จ</Form.Label> :{" "}
                           {dayjs(date).format("DD-MMM-YYYY")}
@@ -426,6 +438,14 @@ const Approver = () => {
                           <Form.Label>วันที่จัดทำ</Form.Label> :{" "}
                           {dayjs(created).format("DD-MMM-YYYY")}
                         </Form.Group>
+                        {work_result ? (
+                          <Form.Group>
+                            <Form.Label>ผลการนำไปปฎิติงาน</Form.Label> :{" "}
+                            {work_result}
+                          </Form.Group>
+                        ) : (
+                          ""
+                        )}
                       </Modal.Body>
                       <Modal.Footer>
                         <Button variant="secondary" onClick={ViewClose}>

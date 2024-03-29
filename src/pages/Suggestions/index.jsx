@@ -48,6 +48,8 @@ const Suggesions = () => {
   //id for edit
   const [editid, setEditId] = useState("");
 
+  const [editStatus, setEditStatus] = useState("");
+
   const [pageSize, setPageSize] = useState(PAGE_SIZES[0]);
   const [blogs, setBlogs] = useState([]);
 
@@ -76,8 +78,10 @@ const Suggesions = () => {
   const [improve, setimprove] = useState("");
   const [results, setresults] = useState("");
   const [status, setStatus] = useState("");
+  const [status_result, setStatusResult] = useState("");
   const [cost, setcost] = useState("");
   const [date, setdate] = useState("");
+  const [work_result, setWorkResult] = useState("");
 
   const getData = async () => {
     const from = (page - 1) * pageSize;
@@ -147,8 +151,10 @@ const Suggesions = () => {
         setresults(res.data.ksssystem.results);
         setcost(res.data.ksssystem.cost);
         setStatus(res.data.ksssystem.status);
+        setStatusResult(res.data.ksssystem.status_result);
         setdate(res.data.ksssystem.date);
-        setCreated(res.data.ksssystem.created_at)
+        setCreated(res.data.ksssystem.created_at);
+        setWorkResult(res.data.ksssystem.work_result);
       });
   };
 
@@ -161,6 +167,7 @@ const Suggesions = () => {
       )
       .then((res) => {
         setEditId(res.data.ksssystem.id);
+        setEditStatus(res.data.ksssystem.status);
         console.log(res);
         reset({
           title: res.data.ksssystem.title,
@@ -172,6 +179,8 @@ const Suggesions = () => {
           results: res.data.ksssystem.results,
           cost: res.data.ksssystem.cost,
           date: res.data.ksssystem.date,
+          work_result: res.data.ksssystem.work_result,
+          status: res.data.ksssystem.status,
         });
       });
   };
@@ -189,6 +198,7 @@ const Suggesions = () => {
     formData.append("results", data.results);
     formData.append("cost", data.cost);
     formData.append("date", data.date);
+    formData.append("work_result", data.work_result);
 
     await axios
       .post(
@@ -202,7 +212,7 @@ const Suggesions = () => {
         setEditShow(false);
         Swal.fire({
           icon: "success",
-          title: "Your KSS has been edited",
+          title: "Your KSS has been updated",
           showConfirmButton: false,
           timer: 2000,
         });
@@ -278,7 +288,7 @@ const Suggesions = () => {
                             className="btn btn-success mb-3"
                             onClick={handleCreateShow}
                           >
-                            <i className="fa fa-plus"></i>{" "}ข้อเสนอแนะ
+                            <i className="fa fa-plus"></i> ข้อเสนอแนะ
                           </button>
                         </div>
                       </div>
@@ -311,12 +321,17 @@ const Suggesions = () => {
                         //{ accessor: "suggest", title: "ผู้เสนอแนะ" },
                         { accessor: "suggest_type", title: "ประเภทข้อเสนอแนะ" },
                         // { accessor: "current", title: "สภาพปัจุบัน" },
-                        { accessor: "status", title: "สถานะการอนุมัติ",textAlignment: "center",
-                          render: ({status}) => (
+                        {
+                          accessor: "status",
+                          title: "สถานะการอนุมัติ",
+                          textAlignment: "center",
+                          render: ({ status }) => (
                             <>
-                              <h5><Badge bg="primary">{status}</Badge></h5>
+                              <h5>
+                                <Badge bg="success">{status}</Badge>
+                              </h5>
                             </>
-                          )
+                          ),
                         },
                         {
                           accessor: "created_at",
@@ -338,7 +353,6 @@ const Suggesions = () => {
                               >
                                 <i className="fa fa-eye"></i>
                               </Button>{" "}
-                            
                               <Button
                                 variant="info"
                                 onClick={() => handleEditShow(blogs)}
@@ -412,7 +426,9 @@ const Suggesions = () => {
                               <Form.Label>ประเภทข้อเสนอแนะ</Form.Label>
                               <Form.Control
                                 placeholder="Enter your suggest type"
-                                {...register("suggest_type", { required: true })}
+                                {...register("suggest_type", {
+                                  required: true,
+                                })}
                               />
                               {errors.suggest_type && (
                                 <span className="text-danger">
@@ -480,7 +496,6 @@ const Suggesions = () => {
                                 </span>
                               )}
                             </Form.Group>
-                            
                           </Row>
                         </Form>
                       </Modal.Body>
@@ -497,7 +512,7 @@ const Suggesions = () => {
                       </Modal.Footer>
                     </Modal>
 
-                    {/* Edit Blog Madal */}
+                    {/* Update KSS Madal */}
                     <Modal centered show={editShow}>
                       <Modal.Header>
                         <Modal.Title>แก้ไขเอกสาร</Modal.Title>
@@ -505,6 +520,13 @@ const Suggesions = () => {
                       <Modal.Body>
                         <Form>
                           <Row>
+                            <Form.Group as={Col} md="12">
+                              <Form.Label>สถานะการอนุมัติ</Form.Label>
+                              <Form.Control
+                                readOnly
+                                {...register("status", { required: false })}
+                              />
+                            </Form.Group>
                             <Form.Group as={Col} md="12">
                               <Form.Label>ชื่อเอกสาร</Form.Label>
                               <Form.Control
@@ -544,7 +566,9 @@ const Suggesions = () => {
                               <Form.Label>ประเภทข้อเสนอแนะ</Form.Label>
                               <Form.Control
                                 placeholder="Enter your suggest type"
-                                {...register("suggest_type", { required: true })}
+                                {...register("suggest_type", {
+                                  required: true,
+                                })}
                               />
                               {errors.suggest_type && (
                                 <span className="text-danger">
@@ -612,6 +636,26 @@ const Suggesions = () => {
                                 </span>
                               )}
                             </Form.Group>
+                            {editStatus === "Approved" ? (
+                              <Form.Group as={Col} md="12">
+                                <Form.Label>ผลการนำไปปฎิติงาน</Form.Label>
+                                <Form.Control
+                                  as="textarea"
+                                  rows={3}
+                                  placeholder="Enter your result"
+                                  {...register("work_result", {
+                                    required: true,
+                                  })}
+                                />
+                                {errors.work_result && (
+                                  <span className="text-danger">
+                                    This field is required
+                                  </span>
+                                )}
+                              </Form.Group>
+                            ) : (
+                              ""
+                            )}
                           </Row>
                         </Form>
                       </Modal.Body>
@@ -644,7 +688,8 @@ const Suggesions = () => {
                           <Form.Label>ผู้เสนอแนะ</Form.Label> : {suggest}
                         </Form.Group>
                         <Form.Group>
-                          <Form.Label>ประเภทข้อเสนอแนะ</Form.Label> : {suggest_type}
+                          <Form.Label>ประเภทข้อเสนอแนะ</Form.Label> :{" "}
+                          {suggest_type}
                         </Form.Group>
                         <Form.Group>
                           <Form.Label>สภาพปัจุบัน</Form.Label> : {current}
@@ -653,14 +698,26 @@ const Suggesions = () => {
                           <Form.Label>แนวทางการปรับปรุง</Form.Label> : {improve}
                         </Form.Group>
                         <Form.Group>
-                          <Form.Label>ผลที่คาดว่าจะได้รับ</Form.Label> : {results}
+                          <Form.Label>ผลที่คาดว่าจะได้รับ</Form.Label> :{" "}
+                          {results}
                         </Form.Group>
                         <Form.Group>
                           <Form.Label>ค่าใช้จ่าย/การลงทุน</Form.Label> : {cost}
                         </Form.Group>
                         <Form.Group>
-                          <Form.Label>สถานะการอนุมัติ</Form.Label> : <><Badge bg="primary">{status}</Badge></>
+                          <Form.Label>สถานะการอนุมัติ</Form.Label> :{" "}
+                          <>
+                            <Badge bg="primary">{status}</Badge>
+                          </>
                         </Form.Group>
+                        {status_result ? (
+                          <Form.Group>
+                            <Form.Label>เหตุผลอนุมัติ/ไม่อนุมัติ</Form.Label> :{" "}
+                            {status_result}
+                          </Form.Group>
+                        ) : (
+                          ""
+                        )}
                         <Form.Group>
                           <Form.Label>กำหนดเสร็จ</Form.Label> :{" "}
                           {dayjs(date).format("DD-MMM-YYYY")}
@@ -669,6 +726,14 @@ const Suggesions = () => {
                           <Form.Label>วันที่จัดทำ</Form.Label> :{" "}
                           {dayjs(created).format("DD-MMM-YYYY")}
                         </Form.Group>
+                        {work_result ? (
+                          <Form.Group>
+                            <Form.Label>ผลการนำไปปฎิติงาน</Form.Label> :{" "}
+                            {work_result}
+                          </Form.Group>
+                        ) : (
+                          ""
+                        )}
                       </Modal.Body>
                       <Modal.Footer>
                         <Button variant="secondary" onClick={ViewClose}>
