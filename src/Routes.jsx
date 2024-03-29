@@ -11,6 +11,7 @@ import Signup from "./pages/auth/Signup";
 import Home from './pages/home'
 import Documents from './pages/Documents'
 import Suggesions from "./pages/Suggestions";
+import Approver from "./pages/approver";
 
 
 const RoutesPage = () => {
@@ -31,6 +32,7 @@ const RoutesPage = () => {
           <Route path="/" element={<Home />} />
           <Route path="/documents" element={<Documents />} />
           <Route path="/suggestions" element={<Suggesions />} />
+          <Route path="/approver" element={<Approver />} />
         </Route>
       </Routes>
     </Router>

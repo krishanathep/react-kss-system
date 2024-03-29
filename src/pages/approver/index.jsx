@@ -10,7 +10,7 @@ import axios from "axios";
 
 const PAGE_SIZES = [10, 20, 30];
 
-const Suggesions = () => {
+const Approver = () => {
   //user login
   const userDatail = useAuthUser();
 
@@ -271,18 +271,6 @@ const Suggesions = () => {
               <div className="col-lg-12">
                 <div className="card card-outline card-primary">
                   <div className="card-body">
-                    <div className="row">
-                      <div className="col-md-12">
-                        <div className="float-right">
-                          <button
-                            className="btn btn-success mb-2"
-                            onClick={handleCreateShow}
-                          >
-                            <i className="fa fa-plus"></i> เพิ่มข้อเสนอแนะ
-                          </button>
-                        </div>
-                      </div>
-                    </div>
                     <DataTable
                       style={{
                         fontFamily: "Prompt",
@@ -341,15 +329,15 @@ const Suggesions = () => {
                             
                               <Button
                                 variant="info"
-                                onClick={() => handleEditShow(blogs)}
+                                onClick={() => alert("Approve "+blogs)}
                               >
-                                <i className="fa fa-edit"></i>
+                                <i className="fas fa-check"></i>
                               </Button>{" "}
                               <Button
                                 variant="danger"
-                                onClick={() => hanldeDelete(blogs)}
+                                onClick={() => alert("Reject "+blogs)}
                               >
-                                <i className="fa fa-trash"></i>
+                                <i className="fas fa-times"></i>
                               </Button>
                             </>
                           ),
@@ -687,4 +675,4 @@ const Suggesions = () => {
   );
 };
 
-export default Suggesions;
+export default Approver;

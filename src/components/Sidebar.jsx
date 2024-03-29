@@ -26,7 +26,7 @@ export default function Sidebar() {
               <li className="nav-item">
                 <Link to="/" className="nav-link">
                   <i className="nav-icon fas fa-home"></i>
-                  <p>Home</p>
+                  <p>หน้าแรก</p>
                 </Link>
               </li>
               {/* <li className="nav-item">
@@ -55,8 +55,14 @@ export default function Sidebar() {
               </li> */}
               <li className="nav-item">
                 <Link to="/suggestions" className="nav-link">
-                  <i className="nav-icon fas fa-users "></i>
-                  <p>Suggest</p>
+                  <i className="nav-icon fas fa-users"></i>
+                  <p>ข้อเสนอแนะ</p>
+                </Link>
+              </li>
+              <li className="nav-item">
+                <Link to="/approver" className="nav-link">
+                  <i className="nav-icon fas fa-user-check"></i>
+                  <p>การอนุมัติ</p>
                 </Link>
               </li>
               {/* <li className="nav-item">
