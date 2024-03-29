@@ -11,39 +11,16 @@ import axios from "axios";
 const PAGE_SIZES = [10, 20, 30];
 
 const Approver = () => {
-  //user login
-  const userDatail = useAuthUser();
+  //approver popup
+  const [approverShow, setApproverShow] = useState(false);
+  const ApproverClose = () => setApproverShow(false);
 
-  //create popup
-  const [createShow, setCreateShow] = useState(false);
-
-  const CreateClose = () => {
-    reset({
-      title: "",
-      content: "",
-      category: "",
-      department: "",
-    });
-    setCreateShow(false);
-  };
-
-  //edit popup
-  const [editShow, setEditShow] = useState(false);
-  const EditClose = () => setEditShow(false);
+  //reject popup
+  const [rejectShow, setRejectShow] = useState(false);
+  const RejectClose = () => setRejectShow(false);
 
   //view popup
   const [viewShow, setViewShow] = useState(false);
-
-  const ViewClose = () => {
-    reset({
-      image: "",
-      title: "",
-      content: "",
-      category: "",
-      department: "",
-    });
-    setViewShow(false);
-  };
 
   //id for edit
   const [editid, setEditId] = useState("");
@@ -98,36 +75,6 @@ const Approver = () => {
     getData();
   }, [page, pageSize]);
 
-  const hanldeDelete = (blogs) => {
-    Swal.fire({
-      title: "Are you sure?",
-      text: "You won't be able to revert this!",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "Yes, delete it!",
-    }).then((result) => {
-      if (result.isConfirmed) {
-        Swal.fire({
-          icon: "success",
-          title: "Your blog has been deleted",
-          showConfirmButton: false,
-          timer: 2000,
-        });
-        axios
-          .delete(
-            "https://full-stack-app.com/laravel_auth_jwt_api/public/api/ksssystem-delete/" +
-              blogs.id
-          )
-          .then((res) => {
-            console.log(res);
-            getData();
-          });
-      }
-    });
-  };
-
   const handleViewShow = async (blogs) => {
     setViewShow(true);
 
@@ -148,12 +95,23 @@ const Approver = () => {
         setcost(res.data.ksssystem.cost);
         setStatus(res.data.ksssystem.status);
         setdate(res.data.ksssystem.date);
-        setCreated(res.data.ksssystem.created_at)
+        setCreated(res.data.ksssystem.created_at);
       });
   };
 
-  const handleEditShow = async (blogs) => {
-    setEditShow(true);
+  const ViewClose = () => {
+    reset({
+      image: "",
+      title: "",
+      content: "",
+      category: "",
+      department: "",
+    });
+    setViewShow(false);
+  };
+
+  const handlApproverShow = async (blogs) => {
+    setApproverShow(true);
     await axios
       .get(
         "https://full-stack-app.com/laravel_auth_jwt_api/public/api/ksssystem/" +
@@ -161,81 +119,42 @@ const Approver = () => {
       )
       .then((res) => {
         setEditId(res.data.ksssystem.id);
-        console.log(res);
-        reset({
-          title: res.data.ksssystem.title,
-          objective: res.data.ksssystem.objective,
-          suggest: res.data.ksssystem.suggest,
-          suggest_type: res.data.ksssystem.suggest_type,
-          current: res.data.ksssystem.current,
-          improve: res.data.ksssystem.improve,
-          results: res.data.ksssystem.results,
-          cost: res.data.ksssystem.cost,
-          date: res.data.ksssystem.date,
-        });
       });
   };
 
-  const handleEditSubmit = async (data) => {
+  const handlRejectShow = async (blogs) => {
+    setRejectShow(true);
+    await axios
+      .get(
+        "https://full-stack-app.com/laravel_auth_jwt_api/public/api/ksssystem/" +
+          blogs.id
+      )
+      .then((res) => {
+        setEditId(res.data.ksssystem.id);
+      });
+  };
+
+  const handleApproverSubmit = async (data) => {
     const formData = new FormData();
 
     formData.append("_method", "put");
-    formData.append("title", data.title);
-    formData.append("objective", data.objective);
-    formData.append("suggest", data.suggest);
-    formData.append("suggest_type", data.suggest_type);
-    formData.append("current", data.current);
-    formData.append("improve", data.improve);
-    formData.append("results", data.results);
-    formData.append("cost", data.cost);
-    formData.append("date", data.date);
+    formData.append("status", data.status);
+    formData.append("status_result", data.status_result);
 
     await axios
       .post(
-        "https://full-stack-app.com/laravel_auth_jwt_api/public/api/ksssystem-update/" +
+        "https://full-stack-app.com/laravel_auth_jwt_api/public/api/ksssystem-approved/" +
           editid,
         formData
       )
       .then((res) => {
         console.log(res.data);
         getData();
-        setEditShow(false);
+        setApproverShow(false);
+        setRejectShow(false);
         Swal.fire({
           icon: "success",
-          title: "Your KSS has been edited",
-          showConfirmButton: false,
-          timer: 2000,
-        });
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
-
-  const handleCreateShow = () => {
-    setCreateShow(true);
-  };
-
-  const handleCreateSubmit = async (data) => {
-    console.log(data);
-    await axios
-      .post(
-        "https://full-stack-app.com/laravel_auth_jwt_api/public/api/ksssystem-create",
-        data
-      )
-      .then((res) => {
-        console.log(res.data);
-        getData();
-        reset({
-          title: "",
-          content: "",
-          category: "",
-          department: "",
-        });
-        setCreateShow(false);
-        Swal.fire({
-          icon: "success",
-          title: "Your blog has been created",
+          title: "Your KSS has been status update",
           showConfirmButton: false,
           timer: 2000,
         });
@@ -252,14 +171,14 @@ const Approver = () => {
           <div className="container-fluid">
             <div className="row mb-2">
               <div className="col-sm-6">
-                <h1 className="m-0">ข้อเสนอแนะทั้งหมด</h1>
+                <h1 className="m-0">การอนุมัติทั้งหมด</h1>
               </div>
               <div className="col-sm-6">
                 <ol className="breadcrumb float-sm-right">
                   <li className="breadcrumb-item">
                     <a href="#">หน้าแรก</a>
                   </li>
-                  <li className="breadcrumb-item active">ข้อเสนอแนะ</li>
+                  <li className="breadcrumb-item active">การอนุมัติ</li>
                 </ol>
               </div>
             </div>
@@ -296,15 +215,16 @@ const Approver = () => {
                           title: "หัวข้อเรื่อง",
                         },
                         { accessor: "objective", title: "วัตถุประสงค์" },
-                        //{ accessor: "suggest", title: "ผู้เสนอแนะ" },
                         { accessor: "suggest_type", title: "ประเภทข้อเสนอแนะ" },
-                        // { accessor: "current", title: "สภาพปัจุบัน" },
-                        { accessor: "status", title: "สถานะการอนุมัติ",textAlignment: "center",
-                          render: ({status}) => (
-                            <>
+                        {
+                          accessor: "status",
+                          title: "สถานะการอนุมัติ",
+                          textAlignment: "center",
+                          render: ({ status }) => {
+                            return (
                               <h5><Badge bg="primary">{status}</Badge></h5>
-                            </>
-                          )
+                            )
+                          },
                         },
                         {
                           accessor: "created_at",
@@ -326,16 +246,15 @@ const Approver = () => {
                               >
                                 <i className="fa fa-eye"></i>
                               </Button>{" "}
-                            
                               <Button
                                 variant="info"
-                                onClick={() => alert("Approve "+blogs)}
+                                onClick={() => handlApproverShow(blogs)}
                               >
                                 <i className="fas fa-check"></i>
                               </Button>{" "}
                               <Button
                                 variant="danger"
-                                onClick={() => alert("Reject "+blogs)}
+                                onClick={() => handlRejectShow(blogs)}
                               >
                                 <i className="fas fa-times"></i>
                               </Button>
@@ -352,249 +271,94 @@ const Approver = () => {
                       recordsPerPageOptions={PAGE_SIZES}
                       onRecordsPerPageChange={setPageSize}
                     />
-                    {/* Create KSS Madal */}
-                    <Modal centered show={createShow}>
+
+                    {/* Approver KSS Madal */}
+                    <Modal centered show={approverShow}>
                       <Modal.Header>
-                        <Modal.Title>เพิ่มเอกสาร</Modal.Title>
+                        <Modal.Title>อนุมัติเอกสาร</Modal.Title>
                       </Modal.Header>
                       <Modal.Body>
                         <Form>
                           <Row>
                             <Form.Group as={Col} md="12">
-                              <Form.Label>หัวข้อเรื่อง</Form.Label>
+                              {/* <Form.Label>สถานะการอนุมัติ</Form.Label> */}
                               <Form.Control
-                                placeholder="Enter your title"
-                                {...register("title", { required: true })}
+                                hidden
+                                value={"Approved"}
+                                readOnly
+                                {...register("status", { required: false })}
                               />
-                              {errors.title && (
+                              {errors.status && (
                                 <span className="text-danger">
                                   This field is required
                                 </span>
                               )}
                             </Form.Group>
                             <Form.Group as={Col} md="12">
-                              <Form.Label>วัตถุประสงค์</Form.Label>
+                              <Form.Label>เหตุผลที่อนุมัติ</Form.Label>
                               <Form.Control
-                                placeholder="Enter your objective"
-                                {...register("objective", { required: true })}
+                                as="textarea"
+                                rows={3}
+                                placeholder="Enter your result"
+                                {...register("status_result", {
+                                  required: false,
+                                })}
                               />
-                              {errors.objective && (
+                              {errors.status_result && (
                                 <span className="text-danger">
                                   This field is required
                                 </span>
                               )}
                             </Form.Group>
-                            <Form.Group as={Col} md="12">
-                              <Form.Label>ผู้เสนอแนะ</Form.Label>
-                              <Form.Control
-                                placeholder="Enter your suggest"
-                                {...register("suggest", { required: true })}
-                              />
-                              {errors.suggest && (
-                                <span className="text-danger">
-                                  This field is required
-                                </span>
-                              )}
-                            </Form.Group>
-                            <Form.Group as={Col} md="12">
-                              <Form.Label>ประเภทข้อเสนอแนะ</Form.Label>
-                              <Form.Control
-                                placeholder="Enter your suggest type"
-                                {...register("suggest_type", { required: true })}
-                              />
-                              {errors.suggest_type && (
-                                <span className="text-danger">
-                                  This field is required
-                                </span>
-                              )}
-                            </Form.Group>
-                            <Form.Group as={Col} md="12">
-                              <Form.Label>สภาพปัจุบัน</Form.Label>
-                              <Form.Control
-                                placeholder="Enter your current"
-                                {...register("current", { required: true })}
-                              />
-                              {errors.current && (
-                                <span className="text-danger">
-                                  This field is required
-                                </span>
-                              )}
-                            </Form.Group>
-                            <Form.Group as={Col} md="12">
-                              <Form.Label>แนวทางการปรับปรุง</Form.Label>
-                              <Form.Control
-                                placeholder="Enter your improve"
-                                {...register("improve", { required: true })}
-                              />
-                              {errors.improve && (
-                                <span className="text-danger">
-                                  This field is required
-                                </span>
-                              )}
-                            </Form.Group>
-                            <Form.Group as={Col} md="12">
-                              <Form.Label>ผลที่คาดว่าจะได้รับ</Form.Label>
-                              <Form.Control
-                                placeholder="Enter your results"
-                                {...register("results", { required: true })}
-                              />
-                              {errors.results && (
-                                <span className="text-danger">
-                                  This field is required
-                                </span>
-                              )}
-                            </Form.Group>
-                            <Form.Group as={Col} md="12">
-                              <Form.Label>ค่าใช้จ่าย/การลงทุน</Form.Label>
-                              <Form.Control
-                                placeholder="Enter your cost"
-                                {...register("cost", { required: true })}
-                              />
-                              {errors.cost && (
-                                <span className="text-danger">
-                                  This field is required
-                                </span>
-                              )}
-                            </Form.Group>
-                            <Form.Group as={Col} md="12">
-                              <Form.Label>กำหนดเสร็จ</Form.Label>
-                              <Form.Control
-                                placeholder="Enter your date"
-                                {...register("date", { required: true })}
-                              />
-                              {errors.date && (
-                                <span className="text-danger">
-                                  This field is required
-                                </span>
-                              )}
-                            </Form.Group>
-                            
                           </Row>
                         </Form>
                       </Modal.Body>
                       <Modal.Footer>
                         <Button
                           variant="primary"
-                          onClick={handleSubmit(handleCreateSubmit)}
+                          onClick={handleSubmit(handleApproverSubmit)}
                         >
                           Submit
                         </Button>
-                        <Button variant="secondary" onClick={CreateClose}>
+                        <Button variant="secondary" onClick={ApproverClose}>
                           Close
                         </Button>
                       </Modal.Footer>
                     </Modal>
 
-                    {/* Edit Blog Madal */}
-                    <Modal centered show={editShow}>
+                    {/* Reject KSS Madal */}
+                    <Modal centered show={rejectShow}>
                       <Modal.Header>
-                        <Modal.Title>แก้ไขเอกสาร</Modal.Title>
+                        <Modal.Title>ไม่อนุมัติเอกสาร</Modal.Title>
                       </Modal.Header>
                       <Modal.Body>
                         <Form>
                           <Row>
                             <Form.Group as={Col} md="12">
-                              <Form.Label>ชื่อเอกสาร</Form.Label>
+                              {/* <Form.Label>สถานะการอนุมัติ</Form.Label> */}
                               <Form.Control
-                                {...register("title", { required: true })}
+                                hidden
+                                value={"Rejected"}
+                                readOnly
+                                {...register("status", { required: false })}
                               />
-                              {errors.title && (
+                              {errors.status && (
                                 <span className="text-danger">
                                   This field is required
                                 </span>
                               )}
                             </Form.Group>
                             <Form.Group as={Col} md="12">
-                              <Form.Label>วัตถุประสงค์</Form.Label>
+                              <Form.Label>เหตุผลที่ไม่อนุมัติ</Form.Label>
                               <Form.Control
-                                placeholder="Enter your objective"
-                                {...register("objective", { required: true })}
+                                as="textarea"
+                                rows={3}
+                                placeholder="Enter your result"
+                                {...register("status_result", {
+                                  required: false,
+                                })}
                               />
-                              {errors.objective && (
-                                <span className="text-danger">
-                                  This field is required
-                                </span>
-                              )}
-                            </Form.Group>
-                            <Form.Group as={Col} md="12">
-                              <Form.Label>ผู้เสนอแนะ</Form.Label>
-                              <Form.Control
-                                placeholder="Enter your suggest"
-                                {...register("suggest", { required: true })}
-                              />
-                              {errors.suggest && (
-                                <span className="text-danger">
-                                  This field is required
-                                </span>
-                              )}
-                            </Form.Group>
-                            <Form.Group as={Col} md="12">
-                              <Form.Label>ประเภทข้อเสนอแนะ</Form.Label>
-                              <Form.Control
-                                placeholder="Enter your suggest type"
-                                {...register("suggest_type", { required: true })}
-                              />
-                              {errors.suggest_type && (
-                                <span className="text-danger">
-                                  This field is required
-                                </span>
-                              )}
-                            </Form.Group>
-                            <Form.Group as={Col} md="12">
-                              <Form.Label>สภาพปัจุบัน</Form.Label>
-                              <Form.Control
-                                placeholder="Enter your current"
-                                {...register("current", { required: true })}
-                              />
-                              {errors.current && (
-                                <span className="text-danger">
-                                  This field is required
-                                </span>
-                              )}
-                            </Form.Group>
-                            <Form.Group as={Col} md="12">
-                              <Form.Label>แนวทางการปรับปรุง</Form.Label>
-                              <Form.Control
-                                placeholder="Enter your improve"
-                                {...register("improve", { required: true })}
-                              />
-                              {errors.improve && (
-                                <span className="text-danger">
-                                  This field is required
-                                </span>
-                              )}
-                            </Form.Group>
-                            <Form.Group as={Col} md="12">
-                              <Form.Label>ผลที่คาดว่าจะได้รับ</Form.Label>
-                              <Form.Control
-                                placeholder="Enter your results"
-                                {...register("results", { required: true })}
-                              />
-                              {errors.results && (
-                                <span className="text-danger">
-                                  This field is required
-                                </span>
-                              )}
-                            </Form.Group>
-                            <Form.Group as={Col} md="12">
-                              <Form.Label>ค่าใช้จ่าย/การลงทุน</Form.Label>
-                              <Form.Control
-                                placeholder="Enter your cost"
-                                {...register("cost", { required: true })}
-                              />
-                              {errors.cost && (
-                                <span className="text-danger">
-                                  This field is required
-                                </span>
-                              )}
-                            </Form.Group>
-                            <Form.Group as={Col} md="12">
-                              <Form.Label>กำหนดเสร็จ</Form.Label>
-                              <Form.Control
-                                placeholder="Enter your date"
-                                {...register("date", { required: true })}
-                              />
-                              {errors.date && (
+                              {errors.status_result && (
                                 <span className="text-danger">
                                   This field is required
                                 </span>
@@ -606,11 +370,11 @@ const Approver = () => {
                       <Modal.Footer>
                         <Button
                           variant="primary"
-                          onClick={handleSubmit(handleEditSubmit)}
+                          onClick={handleSubmit(handleApproverSubmit)}
                         >
                           Submit
                         </Button>
-                        <Button variant="secondary" onClick={EditClose}>
+                        <Button variant="secondary" onClick={RejectClose}>
                           Close
                         </Button>
                       </Modal.Footer>
@@ -632,7 +396,8 @@ const Approver = () => {
                           <Form.Label>ผู้เสนอแนะ</Form.Label> : {suggest}
                         </Form.Group>
                         <Form.Group>
-                          <Form.Label>ประเภทข้อเสนอแนะ</Form.Label> : {suggest_type}
+                          <Form.Label>ประเภทข้อเสนอแนะ</Form.Label> :{" "}
+                          {suggest_type}
                         </Form.Group>
                         <Form.Group>
                           <Form.Label>สภาพปัจุบัน</Form.Label> : {current}
@@ -641,13 +406,17 @@ const Approver = () => {
                           <Form.Label>แนวทางการปรับปรุง</Form.Label> : {improve}
                         </Form.Group>
                         <Form.Group>
-                          <Form.Label>ผลที่คาดว่าจะได้รับ</Form.Label> : {results}
+                          <Form.Label>ผลที่คาดว่าจะได้รับ</Form.Label> :{" "}
+                          {results}
                         </Form.Group>
                         <Form.Group>
                           <Form.Label>ค่าใช้จ่าย/การลงทุน</Form.Label> : {cost}
                         </Form.Group>
                         <Form.Group>
-                          <Form.Label>สถานะการอนุมัติ</Form.Label> : <><Badge bg="primary">{status}</Badge></>
+                          <Form.Label>สถานะการอนุมัติ</Form.Label> :{" "}
+                          <>
+                            <Badge bg="primary">{status}</Badge>
+                          </>
                         </Form.Group>
                         <Form.Group>
                           <Form.Label>กำหนดเสร็จ</Form.Label> :{" "}

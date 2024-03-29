@@ -275,10 +275,10 @@ const Suggesions = () => {
                       <div className="col-md-12">
                         <div className="float-right">
                           <button
-                            className="btn btn-success mb-2"
+                            className="btn btn-success mb-3"
                             onClick={handleCreateShow}
                           >
-                            <i className="fa fa-plus"></i> เพิ่มข้อเสนอแนะ
+                            <i className="fa fa-plus"></i>{" "}ข้อเสนอแนะ
                           </button>
                         </div>
                       </div>
