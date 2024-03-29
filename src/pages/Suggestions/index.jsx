@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { DataTable } from "mantine-datatable";
-import { Modal, Button, Col, Form, Row, Image } from "react-bootstrap";
+import { Modal, Button, Col, Form, Row, Badge } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import { useAuthUser } from "react-auth-kit";
 
@@ -75,6 +75,7 @@ const Suggesions = () => {
   const [current, setcurrent] = useState("");
   const [improve, setimprove] = useState("");
   const [results, setresults] = useState("");
+  const [status, setStatus] = useState("");
   const [cost, setcost] = useState("");
   const [date, setdate] = useState("");
 
@@ -145,6 +146,7 @@ const Suggesions = () => {
         setimprove(res.data.ksssystem.improve);
         setresults(res.data.ksssystem.results);
         setcost(res.data.ksssystem.cost);
+        setStatus(res.data.ksssystem.status);
         setdate(res.data.ksssystem.date);
         setCreated(res.data.ksssystem.created_at)
       });
@@ -250,14 +252,14 @@ const Suggesions = () => {
           <div className="container-fluid">
             <div className="row mb-2">
               <div className="col-sm-6">
-                <h1 className="m-0">เอกสารทั้งหมด</h1>
+                <h1 className="m-0">ข้อเสนอแนะทั้งหมด</h1>
               </div>
               <div className="col-sm-6">
                 <ol className="breadcrumb float-sm-right">
                   <li className="breadcrumb-item">
                     <a href="#">หน้าแรก</a>
                   </li>
-                  <li className="breadcrumb-item active">เอกสาร</li>
+                  <li className="breadcrumb-item active">ข้อเสนอแนะ</li>
                 </ol>
               </div>
             </div>
@@ -276,7 +278,7 @@ const Suggesions = () => {
                             className="btn btn-success mb-2"
                             onClick={handleCreateShow}
                           >
-                            <i className="fa fa-plus"></i> เพิ่มเอกสาร
+                            <i className="fa fa-plus"></i> เพิ่มข้อเสนอแนะ
                           </button>
                         </div>
                       </div>
@@ -307,8 +309,15 @@ const Suggesions = () => {
                         },
                         { accessor: "objective", title: "วัตถุประสงค์" },
                         { accessor: "suggest", title: "ผู้เสนอแนะ" },
-                        { accessor: "suggest_type", title: "ประเภทข้อเสนอแนะ" },
-                        { accessor: "current", title: "สภาพปัจุบัน" },
+                        // { accessor: "suggest_type", title: "ประเภทข้อเสนอแนะ" },
+                        // { accessor: "current", title: "สภาพปัจุบัน" },
+                        { accessor: "status", title: "สถานะการอนุมัติ",textAlignment: "center",
+                          render: ({status}) => (
+                            <>
+                              <h5><Badge bg="primary">{status}</Badge></h5>
+                            </>
+                          )
+                        },
                         {
                           accessor: "created_at",
                           title: "วันที่จัดทำ",
@@ -651,6 +660,9 @@ const Suggesions = () => {
                         </Form.Group>
                         <Form.Group>
                           <Form.Label>ค่าใช้จ่าย/การลงทุน</Form.Label> : {cost}
+                        </Form.Group>
+                        <Form.Group>
+                          <Form.Label>สถานะการอนุมัติ</Form.Label> : <><Badge bg="primary">{status}</Badge></>
                         </Form.Group>
                         <Form.Group>
                           <Form.Label>กำหนดเสร็จ</Form.Label> :{" "}
