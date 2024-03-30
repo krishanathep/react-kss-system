@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { DataTable } from "mantine-datatable";
 import { Modal, Button, Col, Form, Row, Badge } from "react-bootstrap";
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import { useAuthUser } from "react-auth-kit";
 
 import Swal from "sweetalert2";
@@ -37,6 +37,7 @@ const Approver = () => {
   const [records, setRecords] = useState(blogs.slice(0, pageSize));
 
   const {
+    control,
     register,
     handleSubmit,
     reset,
@@ -226,8 +227,18 @@ const Approver = () => {
                           textAlignment: "center",
                           render: ({ status }) => {
                             return (
-                              <h5><Badge bg="success">{status}</Badge></h5>
-                            )
+                              <>
+                                <h5>
+                                  {status === "Approved" ? (
+                                    <Badge bg="success">{status}</Badge>
+                                  ) : status === "Rejected" ? (
+                                    <Badge bg="danger">{status}</Badge>
+                                  ) : (
+                                    <Badge bg="primary">{status}</Badge>
+                                  )}
+                                </h5>
+                              </>
+                            );
                           },
                         },
                         {

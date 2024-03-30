@@ -43,8 +43,8 @@ export default function Signin() {
         text: error.response.data,
       })
       reset({
-        email: "",
-        password: "",
+        email: "krishanathep@gmail.com",
+        password: "jareanpong01",
       });
     } finally {
       setLoading(false)
@@ -63,7 +63,7 @@ export default function Signin() {
         <div className="login-box">
           <div className="login-logo">
             <a href="#">
-              <b>Admin</b>LTE
+              <b>KSS </b>SYSTEM
             </a>
           </div>
           <div  id="auth_bg" className="card">
@@ -98,11 +98,6 @@ export default function Signin() {
                   </div>
                 </div>
               </form>
-              <p className="mb-0 mt-2">
-                <Link to={'/auth/signup'} className="text-center">
-                  Register a new membership
-                </Link>
-              </p>
             </div>
           </div>
         </div>

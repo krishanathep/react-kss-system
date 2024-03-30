@@ -12,7 +12,7 @@ export default function Sidebar() {
             className="brand-image img-circle elevation-1"
             style={{ opacity: ".8" }}
           />
-          <span className="brand-text font-weight-light">AdminLTE 3</span>
+          <span className="brand-text font-weight-light">KSS SYSTEM</span>
         </Link>
         <div className="sidebar">
           <nav className="mt-2">
