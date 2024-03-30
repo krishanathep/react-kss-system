@@ -1,33 +1,18 @@
 import React, { useState, useEffect } from "react";
-import { Link } from 'react-router-dom'
 import axios from "axios";
 
 export default function Home() {
-  const [restuarent, setRestuarent] = useState(0);
-  const [blogs, setBlogs] = useState(0);
-  const [bookings, setBookings] = useState(0);
-  const [results, setResults] = useState(0);
+
+  const [succestion, setSuggestion] = useState(0);
 
   const getAll = async () => {
     await axios
       .get(
-        "https://full-stack-app.com/laravel_auth_jwt_api/public/api/documents"
+        "https://full-stack-app.com/laravel_auth_jwt_api/public/api/ksssystems"
       )
       .then((res) => {
-        setRestuarent(res.data.documents.length);
+        setSuggestion(res.data.ksssystems.length);
       });
-
-    await axios.get("https://full-stack-app.com/laravel_auth_jwt_api/public/api/events").then((res) => {
-      setBookings(res.data.events.length);
-    });
-
-    await axios.get("https://full-stack-app.com/laravel_auth_jwt_api/public/api/blogs").then((res) => {
-      setBlogs(res.data.blogs.length);
-    });
-    await axios.get('https://api.themoviedb.org/3/movie/popular?api_key=54cd1af69dd6dc43fcfdfc3a29bef89b&language=en-US')
-    .then((res)=>{
-      setResults(res.data.results.length)
-    })
   };
 
   useEffect(() => {
@@ -58,59 +43,47 @@ export default function Home() {
             <div className="col-lg-3">
               <div className="small-box bg-info">
                 <div className="inner">
-                  <h3>{restuarent}</h3>
-                  <p>เอกสารทั้งหมด</p>
+                  <h3>{succestion}</h3>
+                  <p>All Suggestion</p>
                 </div>
                 <div className="icon">
-                  <i className="fas fa-file-pdf"></i>
+                <i className="fas fa-chalkboard-teacher"></i>
                 </div>
-                <Link to={'/documents'} className="small-box-footer">
-                  More info <i className="fas fa-arrow-circle-right" />
-                </Link>
-              </div>
-            </div>
-            {/* <div className="col-lg-3">
-              <div className="small-box bg-danger">
-                <div className="inner">
-                  <h3>{bookings}</h3>
-                  <p>All Bookings</p>
-                </div>
-                <div className="icon">
-                  <i className="fas fa-calendar" />
-                </div>
-                <Link to={'/meetings'} className="small-box-footer">
-                  More info <i className="fas fa-arrow-circle-right" />
-                </Link>
-              </div>
-            </div>
-            <div className="col-lg-3">
-              <div className="small-box bg-success">
-                <div className="inner">
-                  <h3>{blogs}</h3>
-                  <p>All Post</p>
-                </div>
-                <div className="icon">
-                  <i className="far fa-comment-dots"></i>
-                </div>
-                <Link to={'/blogs'} className="small-box-footer">
-                  More info <i className="fas fa-arrow-circle-right" />
-                </Link>
               </div>
             </div>
             <div className="col-lg-3">
               <div className="small-box bg-primary">
                 <div className="inner">
-                  <h3>{results}</h3>
-                  <p>All Movies</p>
+                  <h3>7</h3>
+                  <p>In Progress</p>
                 </div>
                 <div className="icon">
-                  <i className="fas fa-photo-video"></i>
+                <i className="far fa-clock"></i>
                 </div>
-                <Link to={'/movies'} className="small-box-footer">
-                  More info <i className="fas fa-arrow-circle-right" />
-                </Link>
               </div>
-            </div> */}
+            </div>
+            <div className="col-lg-3">
+              <div className="small-box bg-success">
+                <div className="inner">
+                  <h3>8</h3>
+                  <p>Approved</p>
+                </div>
+                <div className="icon">
+                <i className="far fa-check-circle"></i>
+                </div>
+              </div>
+            </div>
+            <div className="col-lg-3">
+              <div className="small-box bg-danger">
+                <div className="inner">
+                  <h3>5</h3>
+                  <p>Rejected</p>
+                </div>
+                <div className="icon">
+                <i className="far fa-times-circle"></i>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>

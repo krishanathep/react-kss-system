@@ -21,6 +21,7 @@
     "react-auth-kit": "^2.12.2",
     "react-big-calendar": "^1.5.2",
     "react-bootstrap": "^2.7.4",
+    "react-datepicker": "^6.6.0",
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.44.3",
     "react-hot-toast": "^2.4.1",

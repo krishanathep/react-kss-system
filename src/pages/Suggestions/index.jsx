@@ -3,6 +3,8 @@ import { DataTable } from "mantine-datatable";
 import { Modal, Button, Col, Form, Row, Badge } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import { useAuthUser } from "react-auth-kit";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 import Swal from "sweetalert2";
 import dayjs from "dayjs";
@@ -13,6 +15,9 @@ const PAGE_SIZES = [10, 20, 30];
 const Suggesions = () => {
   //user login
   const userDatail = useAuthUser();
+
+  //start data with date picker
+  const [startDate, setStartDate] = useState(new Date());
 
   //create popup
   const [createShow, setCreateShow] = useState(false);
@@ -381,7 +386,7 @@ const Suggesions = () => {
                     {/* Create KSS Madal */}
                     <Modal centered show={createShow}>
                       <Modal.Header>
-                        <Modal.Title>เพิ่มเอกสาร</Modal.Title>
+                        <Modal.Title>เพิ่มข้อเสนอแนะ</Modal.Title>
                       </Modal.Header>
                       <Modal.Body>
                         <Form>
@@ -401,6 +406,8 @@ const Suggesions = () => {
                             <Form.Group as={Col} md="12">
                               <Form.Label>วัตถุประสงค์</Form.Label>
                               <Form.Control
+                              as="textarea"
+                              rows={3}
                                 placeholder="Enter your objective"
                                 {...register("objective", { required: true })}
                               />
@@ -412,10 +419,17 @@ const Suggesions = () => {
                             </Form.Group>
                             <Form.Group as={Col} md="12">
                               <Form.Label>ผู้เสนอแนะ</Form.Label>
-                              <Form.Control
-                                placeholder="Enter your suggest"
-                                {...register("suggest", { required: true })}
-                              />
+                              <Form.Select 
+                              className="form-control"
+                              {...register("suggest", { required: true })}
+                              >
+                                <option value="">Please select</option>
+                                <option value="รายชื่อผู้เสนอแนะ 1">รายชื่อผู้เสนอแนะ 1</option>
+                                <option value="รายชื่อผู้เสนอแนะ 2">รายชื่อผู้เสนอแนะ 2</option>
+                                <option value="รายชื่อผู้เสนอแนะ 3">รายชื่อผู้เสนอแนะ 3</option>
+                                <option value="รายชื่อผู้เสนอแนะ 4">รายชื่อผู้เสนอแนะ 4</option>
+                                <option value="รายชื่อผู้เสนอแนะ 5">รายชื่อผู้เสนอแนะ 5</option>
+                              </Form.Select>
                               {errors.suggest && (
                                 <span className="text-danger">
                                   This field is required
@@ -424,12 +438,17 @@ const Suggesions = () => {
                             </Form.Group>
                             <Form.Group as={Col} md="12">
                               <Form.Label>ประเภทข้อเสนอแนะ</Form.Label>
-                              <Form.Control
-                                placeholder="Enter your suggest type"
-                                {...register("suggest_type", {
-                                  required: true,
-                                })}
-                              />
+                              <Form.Select 
+                              className="form-control"
+                              {...register("suggest_type", { required: true })}
+                              >
+                                <option value="">Please select</option>
+                                <option value="ประเภทข้อเสนอแนะ 1">ประเภทข้อเสนอแนะ 1</option>
+                                <option value="ประเภทข้อเสนอแนะ 2">ประเภทข้อเสนอแนะ 2</option>
+                                <option value="ประเภทข้อเสนอแนะ 3">ประเภทข้อเสนอแนะ 3</option>
+                                <option value="ประเภทข้อเสนอแนะ 4">ประเภทข้อเสนอแนะ 4</option>
+                                <option value="ประเภทข้อเสนอแนะ 5">ประเภทข้อเสนอแนะ 5</option>
+                              </Form.Select>
                               {errors.suggest_type && (
                                 <span className="text-danger">
                                   This field is required
@@ -438,10 +457,17 @@ const Suggesions = () => {
                             </Form.Group>
                             <Form.Group as={Col} md="12">
                               <Form.Label>สภาพปัจุบัน</Form.Label>
-                              <Form.Control
-                                placeholder="Enter your current"
-                                {...register("current", { required: true })}
-                              />
+                               <Form.Select 
+                              className="form-control"
+                              {...register("current", { required: true })}
+                              >
+                                <option value="">Please select</option>
+                                <option value="สภาพปัจุบัน 1">สภาพปัจุบัน 1</option>
+                                <option value="สภาพปัจุบัน 2">สภาพปัจุบัน 2</option>
+                                <option value="สภาพปัจุบัน 3">สภาพปัจุบัน 3</option>
+                                <option value="สภาพปัจุบัน 4">สภาพปัจุบัน 4</option>
+                                <option value="สภาพปัจุบัน 5">สภาพปัจุบัน 5</option>
+                              </Form.Select>
                               {errors.current && (
                                 <span className="text-danger">
                                   This field is required
@@ -451,6 +477,8 @@ const Suggesions = () => {
                             <Form.Group as={Col} md="12">
                               <Form.Label>แนวทางการปรับปรุง</Form.Label>
                               <Form.Control
+                              as="textarea"
+                              rows={3}
                                 placeholder="Enter your improve"
                                 {...register("improve", { required: true })}
                               />
@@ -463,6 +491,8 @@ const Suggesions = () => {
                             <Form.Group as={Col} md="12">
                               <Form.Label>ผลที่คาดว่าจะได้รับ</Form.Label>
                               <Form.Control
+                              as="textarea"
+                              rows={3}
                                 placeholder="Enter your results"
                                 {...register("results", { required: true })}
                               />
@@ -475,8 +505,9 @@ const Suggesions = () => {
                             <Form.Group as={Col} md="12">
                               <Form.Label>ค่าใช้จ่าย/การลงทุน</Form.Label>
                               <Form.Control
+                                type="number"
                                 placeholder="Enter your cost"
-                                {...register("cost", { required: true })}
+                                {...register("cost", { required: true, valueAsNumber: true })}
                               />
                               {errors.cost && (
                                 <span className="text-danger">
@@ -485,11 +516,17 @@ const Suggesions = () => {
                               )}
                             </Form.Group>
                             <Form.Group as={Col} md="12">
-                              <Form.Label>กำหนดเสร็จ</Form.Label>
+                              <Form.Label>กำหนดเสร็จ</Form.Label><br/>
                               <Form.Control
                                 placeholder="Enter your date"
                                 {...register("date", { required: true })}
                               />
+                               {/* <DatePicker 
+                                className="form-control"
+                                selected={startDate} 
+                                onChange={(date) => setStartDate(date)} 
+                                {...register}
+                               /> */}
                               {errors.date && (
                                 <span className="text-danger">
                                   This field is required
@@ -515,7 +552,7 @@ const Suggesions = () => {
                     {/* Update KSS Madal */}
                     <Modal centered show={editShow}>
                       <Modal.Header>
-                        <Modal.Title>แก้ไขเอกสาร</Modal.Title>
+                        <Modal.Title>แก้ไขข้อเสนอแนะ</Modal.Title>
                       </Modal.Header>
                       <Modal.Body>
                         <Form>
@@ -528,7 +565,7 @@ const Suggesions = () => {
                               />
                             </Form.Group>
                             <Form.Group as={Col} md="12">
-                              <Form.Label>ชื่อเอกสาร</Form.Label>
+                              <Form.Label>หัวข้อเรื่อง</Form.Label>
                               <Form.Control
                                 {...register("title", { required: true })}
                               />
@@ -541,6 +578,8 @@ const Suggesions = () => {
                             <Form.Group as={Col} md="12">
                               <Form.Label>วัตถุประสงค์</Form.Label>
                               <Form.Control
+                              as="textarea"
+                              rows={3}
                                 placeholder="Enter your objective"
                                 {...register("objective", { required: true })}
                               />
@@ -552,10 +591,17 @@ const Suggesions = () => {
                             </Form.Group>
                             <Form.Group as={Col} md="12">
                               <Form.Label>ผู้เสนอแนะ</Form.Label>
-                              <Form.Control
-                                placeholder="Enter your suggest"
-                                {...register("suggest", { required: true })}
-                              />
+                              <Form.Select 
+                              className="form-control"
+                              {...register("suggest", { required: true })}
+                              >
+                                <option value="">Please select</option>
+                                <option value="รายชื่อผู้เสนอแนะ 1">รายชื่อผู้เสนอแนะ 1</option>
+                                <option value="รายชื่อผู้เสนอแนะ 2">รายชื่อผู้เสนอแนะ 2</option>
+                                <option value="รายชื่อผู้เสนอแนะ 3">รายชื่อผู้เสนอแนะ 3</option>
+                                <option value="รายชื่อผู้เสนอแนะ 4">รายชื่อผู้เสนอแนะ 4</option>
+                                <option value="รายชื่อผู้เสนอแนะ 5">รายชื่อผู้เสนอแนะ 5</option>
+                              </Form.Select>
                               {errors.suggest && (
                                 <span className="text-danger">
                                   This field is required
@@ -564,12 +610,22 @@ const Suggesions = () => {
                             </Form.Group>
                             <Form.Group as={Col} md="12">
                               <Form.Label>ประเภทข้อเสนอแนะ</Form.Label>
-                              <Form.Control
-                                placeholder="Enter your suggest type"
-                                {...register("suggest_type", {
-                                  required: true,
-                                })}
-                              />
+                              <Form.Select 
+                              className="form-control"
+                              {...register("suggest_type", { required: true })}
+                              >
+                                <option value="">Please select</option>
+                                <option value="ประเภทข้อเสนอแนะ 1">ประเภทข้อเสนอแนะ 1</option>
+                                <option value="ประเภทข้อเสนอแนะ 2">ประเภทข้อเสนอแนะ 2</option>
+                                <option value="ประเภทข้อเสนอแนะ 3">ประเภทข้อเสนอแนะ 3</option>
+                                <option value="ประเภทข้อเสนอแนะ 4">ประเภทข้อเสนอแนะ 4</option>
+                                <option value="ประเภทข้อเสนอแนะ 5">ประเภทข้อเสนอแนะ 5</option>
+                              </Form.Select>
+                              {errors.suggest_type && (
+                                <span className="text-danger">
+                                  This field is required
+                                </span>
+                              )}
                               {errors.suggest_type && (
                                 <span className="text-danger">
                                   This field is required
@@ -578,10 +634,17 @@ const Suggesions = () => {
                             </Form.Group>
                             <Form.Group as={Col} md="12">
                               <Form.Label>สภาพปัจุบัน</Form.Label>
-                              <Form.Control
-                                placeholder="Enter your current"
-                                {...register("current", { required: true })}
-                              />
+                              <Form.Select 
+                              className="form-control"
+                              {...register("current", { required: true })}
+                              >
+                                <option value="">Please select</option>
+                                <option value="สภาพปัจุบัน 1">สภาพปัจุบัน 1</option>
+                                <option value="สภาพปัจุบัน 2">สภาพปัจุบัน 2</option>
+                                <option value="สภาพปัจุบัน 3">สภาพปัจุบัน 3</option>
+                                <option value="สภาพปัจุบัน 4">สภาพปัจุบัน 4</option>
+                                <option value="สภาพปัจุบัน 5">สภาพปัจุบัน 5</option>
+                              </Form.Select>
                               {errors.current && (
                                 <span className="text-danger">
                                   This field is required
@@ -591,6 +654,8 @@ const Suggesions = () => {
                             <Form.Group as={Col} md="12">
                               <Form.Label>แนวทางการปรับปรุง</Form.Label>
                               <Form.Control
+                              as="textarea"
+                              rows={3}
                                 placeholder="Enter your improve"
                                 {...register("improve", { required: true })}
                               />
@@ -603,6 +668,8 @@ const Suggesions = () => {
                             <Form.Group as={Col} md="12">
                               <Form.Label>ผลที่คาดว่าจะได้รับ</Form.Label>
                               <Form.Control
+                              as="textarea"
+                              rows={3}
                                 placeholder="Enter your results"
                                 {...register("results", { required: true })}
                               />
@@ -615,8 +682,9 @@ const Suggesions = () => {
                             <Form.Group as={Col} md="12">
                               <Form.Label>ค่าใช้จ่าย/การลงทุน</Form.Label>
                               <Form.Control
+                              type="number"
                                 placeholder="Enter your cost"
-                                {...register("cost", { required: true })}
+                                {...register("cost", { required: true, valueAsNumber: true })}
                               />
                               {errors.cost && (
                                 <span className="text-danger">
@@ -675,7 +743,7 @@ const Suggesions = () => {
                     {/* View Blog Madal */}
                     <Modal centered show={viewShow}>
                       <Modal.Header>
-                        <Modal.Title>รายละเอียดเอกสาร</Modal.Title>
+                        <Modal.Title>รายละเอียดข้อเสอแนะ</Modal.Title>
                       </Modal.Header>
                       <Modal.Body>
                         <Form.Group>

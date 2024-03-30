@@ -175,14 +175,14 @@ const Approver = () => {
           <div className="container-fluid">
             <div className="row mb-2">
               <div className="col-sm-6">
-                <h1 className="m-0">การอนุมัติทั้งหมด</h1>
+                <h1 className="m-0">ข้อเสนอแนะทั้งหมด</h1>
               </div>
               <div className="col-sm-6">
                 <ol className="breadcrumb float-sm-right">
                   <li className="breadcrumb-item">
                     <a href="#">หน้าแรก</a>
                   </li>
-                  <li className="breadcrumb-item active">การอนุมัติ</li>
+                  <li className="breadcrumb-item active">ข้อเสนอแนะ</li>
                 </ol>
               </div>
             </div>
@@ -387,7 +387,7 @@ const Approver = () => {
                     {/* View Blog Madal */}
                     <Modal centered show={viewShow}>
                       <Modal.Header>
-                        <Modal.Title>รายละเอียดเอกสาร</Modal.Title>
+                        <Modal.Title>รายละเอียดข้อเสนอแนะ</Modal.Title>
                       </Modal.Header>
                       <Modal.Body>
                         <Form.Group>
