@@ -354,26 +354,26 @@ const Suggesions = () => {
                           accessor: "actions",
                           textAlignment: "center",
                           title: "Actions",
-                          width: 200,
+                          width: 300,
                           render: (blogs) => (
                             <>
                               <Button
                                 variant="primary"
                                 onClick={() => handleViewShow(blogs)}
                               >
-                                <i className="fa fa-eye"></i>
+                                View
                               </Button>{" "}
                               <Button
                                 variant="info"
                                 onClick={() => handleEditShow(blogs)}
                               >
-                                <i className="fa fa-edit"></i>
+                                Update
                               </Button>{" "}
                               <Button
                                 variant="danger"
                                 onClick={() => hanldeDelete(blogs)}
                               >
-                                <i className="fa fa-trash"></i>
+                                Delete
                               </Button>
                             </>
                           ),
