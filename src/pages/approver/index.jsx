@@ -252,26 +252,34 @@ const Approver = () => {
                           accessor: "actions",
                           textAlignment: "center",
                           title: "Actions",
-                          width: 200,
+                          width: 300,
                           render: (blogs) => (
                             <>
                               <Button
                                 variant="primary"
                                 onClick={() => handleViewShow(blogs)}
                               >
-                                <i className="fa fa-eye"></i>
+                                View
                               </Button>{" "}
                               <Button
                                 variant="info"
                                 onClick={() => handlApproverShow(blogs)}
+                                //disbled button then status = In progress
+                                disabled={
+                                  blogs.status === "In progress" ? false : true
+                                }
                               >
-                                <i className="fas fa-check"></i>
+                                Approve
                               </Button>{" "}
                               <Button
                                 variant="danger"
                                 onClick={() => handlRejectShow(blogs)}
+                                //disbled button then status = In progress
+                                disabled={
+                                  blogs.status === "In progress" ? false : true
+                                }
                               >
-                                <i className="fas fa-times"></i>
+                                Reject
                               </Button>
                             </>
                           ),
